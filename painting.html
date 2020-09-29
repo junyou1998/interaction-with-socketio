@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            left: 100px;
+            top: 100px;
+            border: 1px solid #000;
+        }
+
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="box">
+        <div class="ball"></div>
+    </div> -->
+    <!-- <ul id="messages"></ul> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+
+    <script>
+        
+
+        // function circle(xx,yy){
+        //     ellipse(mouseX, mouseY, 50, 50);
+        // }
+    </script>
+
+    <script>
+        let socket = io();
+        let el;
+        var x, y
+        var xx = 0
+        var yy = 0
+
+        var initX
+        var initY
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            // background(100);
+            background('rgba(9, 37, 230,1)')
+            initX = 200
+            initY = 200
+            console.log(initX)
+
+
+
+            socket.on('chat message', function (msg) {
+                x = msg.gamma
+                y = msg.beta
+
+                if (y > 0) {
+                    yy = 1
+                } else {
+                    yy = -1
+                }
+
+                if (x > 0) {
+                    xx = 1
+                } else {
+                    xx = -1
+                }
+                console.log("xxyy : ", xx, yy)
+
+                console.log(msg)
+                // $('#messages').append($('<li>').text(msg));
+                // $('.ball').css('left', msg.beta + 'px')
+                // $('.ball').css('top', msg.gamma + 'px')
+
+
+            });
+        }
+
+        function draw() {
+            noStroke()
+            background('rgba(9, 37, 230,0.01)')
+            fill(242, 215, 17)
+            ellipse(initX, initY, 50, 50);
+            console.log('init',initX)
+            console.log('xx:',xx)
+            initX = initX + xx
+            initY = initY + yy
+            
+            // console.log('initX,initY : ', initX, "/", initY)
+            // console.log(xx)
+        }
+    </script>
+</body>
+
+</html>

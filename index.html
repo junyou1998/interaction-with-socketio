@@ -1,0 +1,174 @@
+<html>
+
+<head>
+    <!-- <h1>Alpha: <span class="alpha"></span></h1>
+    <h1>Beta: <span class="beta"></span></h1>
+    <h1>Gamma: <span class="gamma"></span></h1>
+    <h1 id="condition"></h1>
+    <ul id="messages"></ul> -->
+    <!-- <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form> -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+
+        .controller {
+            width: 100%;
+            height: 100%;
+            background-color: #b89863;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2b4f82;
+            font-size: 150px;
+            font-weight: blod;
+        }
+
+        .condition {
+            color: #2b4f82;
+            font-size: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .triangle {
+            top: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(0 0, 0 50%, 50% 0);
+        }
+
+        .triangle.topright {
+            background-color: #2b4f82;
+            clip-path: polygon(100% 0, 50% 0, 100% 50%);
+        }
+
+        .triangle.bottomright {
+            background-color: #2b4f82;
+            clip-path: polygon(100% 50%, 50% 100%, 100% 100%);
+        }
+
+        .triangle.topleft {
+            background-color: #2b4f82;
+            clip-path: polygon(0 0, 0 50%, 50% 0);
+        }
+
+        .triangle.bottomleft {
+            background-color: #2b4f82;
+            clip-path: polygon(0 50%, 0% 100%, 50% 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <p id="server-time"></p> -->
+
+    <div class="controller">
+        <div id="condition">
+            方向
+        </div>
+        <div class="triangle">
+
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            let socket = io();
+            let el;
+
+            var direct
+            var x = 0,
+                y = 0
+
+            function handleOrientation(event) {
+                var b = Math.round(event.beta); // In degree in the range [-180,180]
+                var g = Math.round(event.gamma);
+                var a = Math.round(event.alpha)
+
+                if (b > 0) {
+                    y = 1
+                } else {
+                    y = -1
+                }
+
+                if (g > 0) {
+                    x = 1
+                } else {
+                    x = -1
+                }
+
+                if (y == 1 && x == 1) {
+                    $('.triangle').removeClass('topright')
+                    $('.triangle').removeClass('bottomright')
+                    $('.triangle').removeClass('topleft')
+                    $('.triangle').removeClass('bottomleft')
+                    $('.triangle').addClass('bottomright')
+                    $('#condition').html('右下')
+                } else if (y == -1 && x == 1) {
+                    $('.triangle').removeClass('topright')
+                    $('.triangle').removeClass('bottomright')
+                    $('.triangle').removeClass('topleft')
+                    $('.triangle').removeClass('bottomleft')
+                    $('.triangle').addClass('topright')
+                    $('#condition').html('右上')
+                } else if (y == 1 && x == -1) {
+                    $('.triangle').removeClass('topright')
+                    $('.triangle').removeClass('bottomright')
+                    $('.triangle').removeClass('topleft')
+                    $('.triangle').removeClass('bottomleft')
+                    $('.triangle').addClass('bottomleft')
+                    $('#condition').html('左下')
+                } else if (y == -1 && x == -1) {
+                    $('.triangle').removeClass('topright')
+                    $('.triangle').removeClass('bottomright')
+                    $('.triangle').removeClass('topleft')
+                    $('.triangle').removeClass('bottomleft')
+                    $('.triangle').addClass('topleft')
+                    $('#condition').html('左上')
+                }
+                // x += 90;
+                // y += 90;
+                // In degree in the range [-90,90]
+                // $('.alpha').html(a)
+                // $('.beta').html(b)
+                // $('.gamma').html(g)
+                socket.emit('chat message', {
+                    alpha: a,
+                    beta: b,
+                    gamma: g
+                });
+            }
+
+            window.addEventListener("deviceorientation", handleOrientation);
+
+
+
+            // $('form').submit(function (e) {
+            //     e.preventDefault(); // prevents page reloading
+            //     socket.emit('chat message', $('#m').val());
+            //     $('#m').val('');
+            //     return false;
+            // });
+
+            // socket.on('chat message', function (msg) {
+            //     $('#messages').append($('<li>').text(msg));
+            // });
+
+            // socket.on('time', (timeString) => {
+            //     el = document.getElementById('server-time');
+            //     el.innerHTML = 'Server time: ' + timeString;
+            // });
+        })
+    </script>
+</body>
+
+</html>
