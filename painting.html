@@ -31,20 +31,12 @@
 </head>
 
 <body>
-    <!-- <div class="box">
-        <div class="ball"></div>
-    </div> -->
-    <!-- <ul id="messages"></ul> -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
 
     <script>
-        
 
-        // function circle(xx,yy){
-        //     ellipse(mouseX, mouseY, 50, 50);
-        // }
     </script>
 
     <script>
@@ -85,9 +77,6 @@
                 console.log("xxyy : ", xx, yy)
 
                 console.log(msg)
-                // $('#messages').append($('<li>').text(msg));
-                // $('.ball').css('left', msg.beta + 'px')
-                // $('.ball').css('top', msg.gamma + 'px')
 
 
             });
@@ -102,9 +91,6 @@
             console.log('xx:',xx)
             initX = initX + xx
             initY = initY + yy
-            
-            // console.log('initX,initY : ', initX, "/", initY)
-            // console.log(xx)
         }
     </script>
 </body>
