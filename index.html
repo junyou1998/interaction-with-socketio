@@ -1,7 +1,7 @@
 <html>
 
 <head>
-
+    <title>操控端</title>
     <style>
         body {
             margin: 0;
@@ -61,7 +61,6 @@
 </head>
 
 <body>
-    <!-- <p id="server-time"></p> -->
 
     <div class="controller">
         <div id="condition">
@@ -83,7 +82,7 @@
                 y = 0
 
             function handleOrientation(event) {
-                var b = Math.round(event.beta); // In degree in the range [-180,180]
+                var b = Math.round(event.beta); 
                 var g = Math.round(event.gamma);
                 var a = Math.round(event.alpha)
 
@@ -128,12 +127,7 @@
                     $('.triangle').addClass('topleft')
                     $('#condition').html('左上')
                 }
-                // x += 90;
-                // y += 90;
-                // In degree in the range [-90,90]
-                // $('.alpha').html(a)
-                // $('.beta').html(b)
-                // $('.gamma').html(g)
+
                 socket.emit('chat message', {
                     alpha: a,
                     beta: b,
